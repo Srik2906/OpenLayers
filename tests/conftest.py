@@ -13,7 +13,7 @@ def setup(request):
         "firefox" : playwright.firefox
     }
     browser_type = browser_dict.get(request.param)
-    browser = browser_type.launch(headless=False)
+    browser = browser_type.launch(headless=True)
     page= browser.new_page()
     request.cls.page = page
     page.goto(os.getenv("OPENLAYERS_URL"))
