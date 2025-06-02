@@ -5,10 +5,15 @@ import os
 
 load_dotenv()
 
-@pytest.fixture(scope="class")
+@pytest.fixture(params = ["chromium","firefox"],scope="class")
 def setup(request):
     playwright = sync_playwright().start()
-    browser = playwright.chromium.launch(headless=True)
+    browser_dict = {
+        "chromium" : playwright.chromium,
+        "firefox" : playwright.firefox
+    }
+    browser_type = browser_dict.get(request.param)
+    browser = browser_type.launch(headless=False)
     page= browser.new_page()
     request.cls.page = page
     page.goto(os.getenv("OPENLAYERS_URL"))
