@@ -2,8 +2,8 @@ name: Run Popup Test Suite
 
 on:
   workflow_dispatch:
-    push:
-      branches: [ main ]  # Runs on push to main
+  push:
+    branches: [ main ]  # Runs on push to main
 
 jobs:
   run-tests:
@@ -26,6 +26,8 @@ jobs:
 
       - name: Run tests
         run: pytest
+        env:
+          OPENLAYERS_URL: ${{ secrets.OPENLAYERS_URL }}
 
       - name: Upload test report
         uses: actions/upload-artifact@v4

@@ -1,9 +1,9 @@
 import pytest
 from playwright.sync_api import sync_playwright
+from dotenv import load_dotenv
+import os
 
-
-
-
+load_dotenv()
 
 @pytest.fixture(scope="class")
 def setup(request):
@@ -11,7 +11,7 @@ def setup(request):
     browser = playwright.chromium.launch(headless=True)
     page= browser.new_page()
     request.cls.page = page
-    page.goto("https://openlayers.org/en/latest/examples/popup.html")
+    page.goto(os.getenv("OPENLAYERS_URL"))
     yield page
 
     ##teardown
